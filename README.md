@@ -1,11 +1,11 @@
 # universal-claude-model-router
 
-> **Universal Claude model router — intelligent routing across Groq/Ollama/Gemini/OpenRouter**
+> **Universal Claude model router — intelligent routing across Claude, GPT, Gemini, Groq**
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat)
 ![Claude Code](https://img.shields.io/badge/Claude_Code-Skill-FF6B35?style=flat)
-![Stars](https://img.shields.io/github/stars/hmzainjamil/universal-claude-model-router?style=flat)
+![GitHub Stars](https://img.shields.io/github/stars/hmzainjamil/universal-claude-model-router?style=flat)
 ![Last Commit](https://img.shields.io/github/last-commit/hmzainjamil/universal-claude-model-router?style=flat)
 
 ---
@@ -14,247 +14,111 @@
 
 | Concept | Description |
 |---|---|
-| **Router** | Logic layer that selects optimal LLM for each request |
-| **Tier 0** | Free/local models — Groq, Ollama, DeepSeek, Gemini Flash |
-| **Fallback Chain** | Ordered list of models tried when primary unavailable |
-| **Token Budget** | Per-request cost cap that triggers downgrade to cheaper model |
-| **Latency SLA** | Max acceptable response time before switching to faster model |
-| **Context Window** | Max tokens a model can process — affects routing decisions |
-| **Cost-per-Token** | Pricing metric used to rank models in budget-aware routing |
-| **Load Balancing** | Distributing requests across multiple model endpoints |
-| **Model Registry** | Catalog of available models with capabilities and pricing |
-| **Semantic Cache** | Store/reuse embeddings to skip redundant LLM calls |
+| **Routing** | Core capability: routing workflows and automation |
+| **Model** | Core capability: model workflows and automation |
+| **Claude** | Core capability: claude workflows and automation |
+| **Gpt** | Core capability: gpt workflows and automation |
+| **Gemini** | Core capability: gemini workflows and automation |
+| **Groq** | Core capability: groq workflows and automation |
+| **Fallback** | Core capability: fallback workflows and automation |
+| **Cost** | Core capability: cost workflows and automation |
 
 ---
 
 ## 🔥 Hot Commands
 
 ```bash
-# Load skill in Claude Code
-/skills load universal-claude-model-router
+# Activate skill
+claude --skill universal-claude-model-router 'your task here'
 
-# Check skill status
-/skills list | grep universal
+# Get help
+claude 'what can universal-claude-model-router do?'
 
-# Clone and explore locally
-gh repo clone hmzainjamil/universal-claude-model-router
-cd universal-claude-model-router
-
-# Run with Claude Code (invoke skill directly)
-claude -p "use universal claude model router skill to handle my task"
-
-# Check README and skill manifest
-cat SKILL.md 2>/dev/null || cat README.md | head -50
+# Run main workflow
+claude 'run routing workflow'
 ```
 
 ## ■ tip
-> **Always check `SKILL.md`** before invoking — it defines exact triggers, required context, and output format. Mismatched context = degraded results.
+> Trigger automatically by mentioning routing or model in your Claude prompt.
 
 ---
 
 ## ☠️ STARTUPS / BUSINESSES
 
-- **Digital agencies** — automate routing workflows, cut delivery time 10×
-- **SaaS founders** — plug into existing Claude Code setup, zero infra overhead
-- **Freelancers** — use as force-multiplier for client work in claude + groq
-- **AI engineers** — extend with custom skills, fork and adapt to your stack
+- **Agencies**: use universal-claude-model-router to automate routing workflows
+- **Founders**: ship model features 10x faster
+- **Freelancers**: deliver claude work with AI assistance
 
 ---
 
 ## Features
 
-- **Plug-and-play** — works immediately with Claude Code, no custom config
-- **Composable** — chain with other skills via `/skills load` pipeline
-- **Token-efficient** — designed around context compression and caveman-mode output
-- **Tier-0 routing** — delegates sub-tasks to Groq/Ollama to preserve Claude quota
-- **Memory-aware** — reads/writes to `~/.claude/` session memory automatically
-- **Async capable** — heavy tasks spawned as background agents, non-blocking
-- **Production-tested** — used in live agency workflows at hmzainjamil
+- Routing automation
+- Model automation
+- Claude automation
+- Gpt automation
+- Gemini automation
+- Groq automation
 
 ---
 
 ## Installation
 
 ```bash
-# Option 1: Clone directly
 git clone https://github.com/hmzainjamil/universal-claude-model-router.git
 cd universal-claude-model-router
-
-# Option 2: Install as Claude Code skill
-cp -r . ~/.claude/skills/universal-claude-model-router/
-
-# Option 3: Via gh CLI
-gh repo clone hmzainjamil/universal-claude-model-router ~/.claude/skills/universal-claude-model-router
 ```
 
 ---
 
 ## Usage
 
-### Basic
-
 ```bash
-# Activate in Claude Code session
-/skills load universal-claude-model-router
-
-# Verify loaded
-/skills list
-```
-
-### Advanced
-
-```python
-# Programmatic invocation via Claude API
-import anthropic
-
-client = anthropic.Anthropic()
-response = client.messages.create(
-    model="claude-sonnet-4-5",
-    max_tokens=4096,
-    system="You are using the universal-claude-model-router skill. Universal Claude model router — intelligent routing across Groq/Ollama/Gemini/OpenRouter",
-    messages=[{"role": "user", "content": "Run the primary workflow"}]
-)
-print(response.content[0].text)
-```
-
-### With MAE Pipeline
-
-```bash
-# Route through MAE for parallel execution
-mae run "universal claude model router - execute primary workflow"
-
-# Blast across multiple models
-tcc blast "task1 for routing" "task2 for claude" "task3 for groq"
+# In Claude Code
+/universal-claude-model-router
+claude 'routing task here'
 ```
 
 ---
 
 ## Configuration
 
-```yaml
-# .claude/skills/universal-claude-model-router/config.yaml
-skill:
-  name: universal-claude-model-router
-  version: "1.0.0"
-  triggers:
-    - "routing"
-    - "claude"
-    - "groq"
-  model_routing:
-    primary: groq/llama-3.3-70b
-    fallback: ollama/qwen2.5:7b
-    synthesis: claude-opus
-  context:
-    max_tokens: 8000
-    compression: caveman-mode
-```
+| Variable | Description | Default |
+|---|---|---|
+| `API_KEY` | Primary API key | Required |
+| `MODEL` | AI model to use | claude-sonnet |
+| `DEBUG` | Enable debug mode | false |
+| `MAX_TOKENS` | Max token budget | 8192 |
 
 ---
 
 ## Architecture
 
 ```
-User Intent
-    │
-    ▼
-Skill Router ──► Trigger Match ──► universal-claude-model-router
-                                       │
-                    ┌──────────────────┼──────────────────┐
-                    ▼                  ▼                   ▼
-              Groq (fast)        Ollama (local)     Claude (synthesis)
-                    │                  │                   │
-                    └──────────────────┴──────────────────►│
-                                                     Final Output
+universal-claude-model-router/
+├── README.md          # Documentation
+├── SKILL.md           # Claude Code skill definition
+├── scripts/           # Automation scripts
+├── templates/         # Output templates
+└── examples/          # Usage examples
 ```
 
 ---
 
-## Integration Examples
+## Troubleshooting
 
-### n8n Workflow
-
-```json
-{
-  "nodes": [
-    {
-      "name": "universal-claude-model-router Trigger",
-      "type": "n8n-nodes-base.webhook",
-      "parameters": {
-        "path": "/routing-hook"
-      }
-    },
-    {
-      "name": "Claude Code Skill",
-      "type": "n8n-nodes-base.httpRequest",
-      "parameters": {
-        "url": "http://localhost:3100/api/run-skill",
-        "body": {{"skill": "universal-claude-model-router", "input": "{{$json.body}}"}}
-      }
-    }
-  ]
-}
-```
-
-### Python SDK
-
-```python
-import subprocess
-
-def run_skill(task: str) -> str:
-    result = subprocess.run(
-        ['claude', '-p', f'using universal-claude-model-router skill: {task}'],
-        capture_output=True, text=True
-    )
-    return result.stdout
-
-output = run_skill("routing analysis for my project")
-print(output)
-```
-
----
-
-## Performance
-
-| Metric | Value |
-|---|---|
-| Avg response time | < 2s (Tier 0) / < 8s (Claude) |
-| Token usage | ~500-2000 per invocation |
-| Context window | 8K tokens per task |
-| Parallel agents | Up to 8 concurrent |
-| Cost per run | $0.00 (Tier 0) / ~$0.01 (Claude) |
-
----
-
-## Related Skills
-
-| Skill | Use Case |
-|---|---|
-| `caveman` | Compress all outputs — faster, fewer tokens |
-| `compact-guard` | Prevent context window overflow |
-| `model-routing` | Route to cheapest capable model |
-| `context-compression` | Reduce context before heavy tasks |
-| `launch-optimized` | Start sessions with full skill stack loaded |
-| `find-skills` | Discover skills matching your intent |
+| Issue | Cause | Fix |
+|---|---|---|
+| Auth fails | Invalid API key | Re-export key |
+| Timeout | Network latency | Increase timeout |
+| Empty output | Bad prompt | Check template |
+| Rate limit | Too many requests | Add delay |
 
 ---
 
 ## Contributing
 
-1. Fork this repo
-2. Create feature branch: `git checkout -b feature/routing-improvement`
-3. Add/update `SKILL.md` with new capabilities
-4. Test: `claude -p "test universal-claude-model-router skill"`
-5. PR with before/after token usage comparison
-
----
-
-## Changelog
-
-### v1.0.0
-- Initial release with core routing functionality
-- Tier-0 model routing (Groq + Ollama)
-- Context compression enabled by default
-- MAE pipeline integration
+PRs welcome. Open an issue first for major changes.
 
 ---
 
@@ -266,10 +130,4 @@ print(output)
 
 ## 📜 License
 
-MIT — use freely, attribute appreciated.
-
----
-
-<div align="center">
-  <sub>Built by <a href="https://github.com/hmzainjamil">hmzainjamil</a> · Powered by Claude Code · Part of the OpenClaw ecosystem</sub>
-</div>
+MIT — free to use, modify, distribute.
