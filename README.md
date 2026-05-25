@@ -1,6 +1,6 @@
 # universal-claude-model-router
 
-> **Universal Claude model router — intelligent routing across Claude, GPT, Gemini, Groq**
+> **Universal model router — intelligent routing across Claude, GPT, Gemini, Groq**
 
 ![Status](https://img.shields.io/badge/status-active-brightgreen?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-blue?style=flat)
@@ -14,14 +14,14 @@
 
 | Concept | Description |
 |---|---|
-| **Routing** | Core routing capability for universal-claude-model-router workflows |
-| **Model** | Core model capability for universal-claude-model-router workflows |
-| **Claude** | Core claude capability for universal-claude-model-router workflows |
-| **Gpt** | Core gpt capability for universal-claude-model-router workflows |
-| **Gemini** | Core gemini capability for universal-claude-model-router workflows |
-| **Groq** | Core groq capability for universal-claude-model-router workflows |
-| **Fallback** | Core fallback capability for universal-claude-model-router workflows |
-| **Cost** | Core cost capability for universal-claude-model-router workflows |
+| **Router** | Intelligently selects model based on task |
+| **Fallback** | Auto-retry with next model on failure |
+| **Cost Control** | Route cheap tasks to fast/cheap models |
+| **Latency** | Route time-sensitive tasks to fastest model |
+| **Quality** | Route complex tasks to highest-capability model |
+| **Load Balance** | Distribute across providers to avoid rate limits |
+| **Logging** | Track which model handled each request |
+| **Budget** | Hard spend limits per model/day |
 
 ---
 
@@ -46,19 +46,19 @@ claude 'what can universal-claude-model-router do?'
 ## ☠️ STARTUPS / BUSINESSES
 
 - **Agencies**: automate routing workflows for clients at scale
-- **Founders**: ship model features 10x faster with Claude
-- **Freelancers**: deliver claude work with AI-assisted precision
+- **Founders**: ship model features 10x faster
+- **Freelancers**: deliver claude work with AI precision
 
 ---
 
 ## Features
 
-- Routing automation and orchestration
-- Model automation and orchestration
-- Claude automation and orchestration
-- Gpt automation and orchestration
-- Gemini automation and orchestration
-- Groq automation and orchestration
+- Routing automation
+- Model automation
+- Claude automation
+- Gpt automation
+- Gemini automation
+- Groq automation
 
 ---
 
@@ -74,9 +74,14 @@ cd universal-claude-model-router
 ## Usage
 
 ```bash
-# In Claude Code
-/universal-claude-model-router
-claude 'routing task here'
+# Activate skill in Claude Code
+claude --skill universal-claude-model-router "your task here"
+
+# Quick workflow
+claude "routing automation task"
+
+# Get help
+claude "what can universal-claude-model-router do?"
 ```
 
 ---
@@ -85,11 +90,11 @@ claude 'routing task here'
 
 | Variable | Description | Default |
 |---|---|---|
-| `API_KEY` | Primary API key for service access | Required |
+| `API_KEY` | Primary API key | Required |
 | `MODEL` | AI model to use | claude-3-5-sonnet |
-| `DEBUG` | Enable verbose debug output | false |
-| `MAX_TOKENS` | Max token budget per request | 8192 |
-| `TIMEOUT` | Request timeout in seconds | 30 |
+| `DEBUG` | Enable verbose debug | false |
+| `MAX_TOKENS` | Max token budget | 8192 |
+| `TIMEOUT` | Request timeout (sec) | 30 |
 | `LOG_LEVEL` | Logging verbosity | info |
 
 ---
@@ -98,40 +103,36 @@ claude 'routing task here'
 
 ```
 universal-claude-model-router/
-├── README.md           # This file
+├── README.md           # Documentation
 ├── SKILL.md            # Claude Code skill definition
-├── scripts/            # Automation and utility scripts
-├── templates/          # Output and prompt templates
-├── examples/           # Usage examples and demos
-├── tests/              # Unit and integration tests
+├── scripts/            # Automation scripts
+├── templates/          # Output templates
+├── examples/           # Usage examples
 └── docs/               # Extended documentation
-    ├── setup.md        # Setup guide
-    ├── api.md          # API reference
-    └── faq.md          # Frequently asked questions
 ```
 
 ---
 
 ## Examples
 
-### Basic Usage
+### Basic
 
 ```bash
-# Activate in Claude Code
-claude --skill universal-claude-model-router "your task here"
+# Simple task
+claude --skill universal-claude-model-router "routing task"
 
-# With options
-claude --skill universal-claude-model-router --verbose "detailed task"
+# Verbose
+claude --skill universal-claude-model-router --verbose "detailed model task"
 ```
 
-### Advanced Workflow
+### Advanced Pipeline
 
 ```bash
-# Chain with other skills
+# Chain skills
 claude --skill universal-claude-model-router "step 1" | claude --skill summarize
 
-# Batch processing
-for item in list; do
+# Batch run
+for item in $(cat list.txt); do
   claude --skill universal-claude-model-router "process $item"
 done
 ```
@@ -142,18 +143,18 @@ done
 
 | Issue | Cause | Fix |
 |---|---|---|
-| Auth fails | Invalid/expired API key | Re-export key in shell profile |
-| Timeout error | Network latency or large payload | Increase TIMEOUT value |
-| Empty output | Prompt too vague | Add more context to request |
-| Rate limit hit | Too many requests | Add delay between calls |
-| Model error | Unsupported model version | Update MODEL variable |
+| Auth fails | Invalid API key | Re-export key in shell profile |
+| Timeout | Network or large payload | Increase TIMEOUT value |
+| Empty output | Prompt too vague | Add more context |
+| Rate limit | Too many requests | Add delay between calls |
+| Model error | Unsupported version | Update MODEL variable |
 | Import error | Missing dependency | Run pip install -r requirements.txt |
 
 ---
 
 ## Comparison
 
-| Feature | This Skill | Alternative A | Alternative B |
+| Feature | This Skill | Alt A | Alt B |
 |---|---|---|---|
 | Claude Code native | ✅ | ❌ | ✅ |
 | Auto-activation | ✅ | ✅ | ❌ |
@@ -163,23 +164,21 @@ done
 
 ---
 
-## Contributing
-
-1. Fork this repo
-2. Create feature branch: `git checkout -b feat/your-feature`
-3. Commit changes: `git commit -m 'feat: add feature'`
-4. Push: `git push origin feat/your-feature`
-5. Open PR
-
----
-
 ## Changelog
 
 | Version | Changes |
 |---|---|
-| v2.0 | Major refactor, Claude 4 support |
-| v1.5 | Added auto-activation keywords |
+| v2.0 | Claude 4 support, auto-activation |
+| v1.5 | Added keyword triggers |
 | v1.0 | Initial release |
+
+---
+
+## Contributing
+
+1. Fork → feature branch → commit → PR
+2. Follow conventional commits: `feat:`, `fix:`, `docs:`
+3. Add tests for new features
 
 ---
 
@@ -191,7 +190,7 @@ done
 
 ## 📜 License
 
-MIT — free to use, modify, and distribute.
+MIT — free to use, modify, distribute.
 
 ---
 
